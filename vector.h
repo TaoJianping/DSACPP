@@ -22,19 +22,27 @@ protected:
     void copyFrom(T const *A, Rank lo, Rank hi);    // 复制数组区间
 
     void expand();
-    void ExpandWhatever();
 
     void shrink();
 
     bool bubble(Rank lo, Rank hi);
+
     void bubbleSort(Rank lo, Rank hi);
+
     Rank max(Rank lo, Rank hi);
+
     void selectionSort(Rank lo, Rank hi);
+
     void merge(Rank lo, Rank mi, Rank hi);
+
     void mergeSort(Rank lo, Rank hi);
+
     Rank partition(Rank lo, Rank hi);
+
     void quickSort(Rank lo, Rank hi);
+
     void heapSort(Rank lo, Rank hi);
+
 public:
     // 构造函数
     explicit Vector(int c = DEFAULT_CAPACITY, int s = 0, T v = 0); //容量为c、规模为s、所有元素初始为v
@@ -46,64 +54,75 @@ public:
     ~Vector() { delete[] _elem; } //释放内部空间
     // 只读访问接口
     [[nodiscard]] Rank size() const { return _size; }
+
     [[nodiscard]] bool empty() const { return !_size; }
-    int disordered() const;
-    T get(Rank) const ;
+
+    [[nodiscard]] int disordered() const;
+
+    T get(Rank) const;
+
     Rank find(T const &e) const { return find(e, 0, (Rank) _size); }
+
     Rank find(T const &e, Rank lo, Rank hi) const;
+
     Rank search(T const &e) const;
+
     Rank search(T const &e, Rank lo, Rank hi) const;
 
     T &operator[](Rank r) const;
+
     Vector<T> &operator=(Vector<T> const &);
+
     T remove(Rank r);
+
     int remove(Rank lo, Rank hi);
+
     void insert(Rank r, T const &e);
+
     void put(Rank r, T const &e);
+
     Rank insert(T const &e) { return insert(_size, e); }
+
     void sort(Rank lo, Rank hi);
+
     void sort() { sort(0, _size); }
+
     void unsort(Rank lo, Rank hi);
+
     void unsort() { unsort(0, _size); }
+
     int deduplicate();
+
     int uniquify();
+
     void traverse(void (*)(T &));
+
     template<typename VST>
     void traverse(VST &);
-
 };
 
 
 template<typename T>
 void Vector<T>::expand() {
-    // 尚未满员时，不必扩容
-    if (_size < _capacity) {
+    if ((_size * 2) < _capacity) {
         return;
     }
-
-    int new_size = _capacity * 2;
-    // 不低于最小容量
-    T *new_elem = new T[new_size];
-    // 容量加倍
-    _capacity = new_size;
-    // 复制原向量内容
+    T *old_elem = _elem;
+    _capacity = _capacity * 2;
+    _elem = new T[_capacity];
     for (int i = 0; i < _size; ++i) {
-        new_elem[i] = _elem[i];
+        _elem[i] = old_elem[i];
     }
-
-    // 释放原空间
-    // 释放指针的时候，如果他是数组，要像下面这么写
-    delete []_elem;
-
-    _elem = new_elem;
+    delete[] old_elem;
 }
 
 template<typename T>
 T Vector<T>::remove(Rank r) {
     T ret = _elem[r];
     for (int i = r; i < _size; ++i) {
-        _elem[i] = _elem[i+1];
+        _elem[i] = _elem[i + 1];
     }
+    _size--;
     return ret;
 }
 
@@ -162,15 +181,6 @@ void Vector<T>::insert(Rank r, const T &e) {
     _elem[r] = e;
 }
 
-template<typename T>
-void Vector<T>::ExpandWhatever() {
-    T *new_elem = new T[_capacity * 2];
-    for (int i = 0; i < _size; ++i) {
-        new_elem[i] = _elem[i];
-    }
-    _elem = new_elem;
-    delete _elem;
-}
 
 template<typename T>
 T Vector<T>::get(Rank r) const {
@@ -180,6 +190,27 @@ T Vector<T>::get(Rank r) const {
 template<typename T>
 void Vector<T>::put(Rank r, const T &e) {
     _elem[r] = e;
+}
+
+template<typename T>
+int Vector<T>::disordered() const {
+    int ret = 0;
+    for (int i = 0; i < (_size - 1); ++i) {
+        if (_elem[i] > _elem[i + 1]) {
+            ret++;
+        }
+    }
+    return ret;
+}
+
+template<typename T>
+Rank Vector<T>::find(const T &e, Rank lo, Rank hi) const {
+    for (int i = lo; i < hi; ++i) {
+        if (_elem[i] == e) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 

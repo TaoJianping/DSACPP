@@ -69,6 +69,33 @@ int TestVector::TestCommon() {
     assert(v[2] == 9);
     assert(v[3] == 6);
 
+    v.insert(1, 3);
+    assert(v[0] == 4);
+    assert(v[1] == 3);
+    assert(v[2] == 7);
+    assert(v[3] == 9);
+    assert(v[4] == 6);
+
+    v.insert(3, 4);
+    assert(v[0] == 4);
+    assert(v[1] == 3);
+    assert(v[2] == 7);
+    assert(v[3] == 4);
+    assert(v[4] == 9);
+    assert(v[5] == 6);
+
+    auto test3 = v.size();
+    assert(test3 == 6);
+
+    auto test4 = v.disordered();
+    assert(test4 == 3);
+
+    auto test5 = v.find(9);
+    assert(test5 == 4);
+
+    auto test6 = v.find(5);
+    assert(test6 == -1);
+
     std::cout << "²âÊÔTestVector³É¹¦" << std::endl;
     return 0;
 }
