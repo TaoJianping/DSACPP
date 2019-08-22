@@ -23,6 +23,7 @@ void TestVector::TestCopyFrom() {
 int TestVector::main() {
     TestCommon();
     TestCopyFrom();
+    TestRemove();
     return 0;
 }
 
@@ -31,7 +32,7 @@ int TestVector::TestCommon() {
     // new 出来的对象都在堆上
     // 没事不要new
     // TODO 理解拷贝构造？？？？
-    Vector<int > v;
+    Vector<int> v;
 
     v.insert(0, 9);
     assert(v[0] == 9);
@@ -98,4 +99,29 @@ int TestVector::TestCommon() {
 
     std::cout << "测试TestVector成功" << std::endl;
     return 0;
+}
+
+void TestVector::TestRemove() {
+    int l[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    auto v = Vector<int>(l, 0, 10);
+    assert(v[0] == 0);
+    assert(v[1] == 1);
+    assert(v[2] == 2);
+    assert(v[3] == 3);
+    assert(v[4] == 4);
+    assert(v[5] == 5);
+    assert(v[6] == 6);
+    assert(v[7] == 7);
+    assert(v[8] == 8);
+    assert(v[9] == 9);
+
+    v.remove(2, 7);
+
+    assert(v[0] == 0);
+    assert(v[1] == 1);
+    assert(v[2] == 7);
+    assert(v[3] == 8);
+    assert(v[4] == 9);
+
+    assert(v.size() == 5);
 }

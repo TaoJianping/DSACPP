@@ -69,7 +69,7 @@ public:
 
     Rank search(T const &e, Rank lo, Rank hi) const;
 
-    T &operator[](Rank r) const;
+    T & operator[](Rank r) const;
 
     Vector<T> &operator=(Vector<T> const &);
 
@@ -119,10 +119,7 @@ void Vector<T>::expand() {
 template<typename T>
 T Vector<T>::remove(Rank r) {
     T ret = _elem[r];
-    for (int i = r; i < _size; ++i) {
-        _elem[i] = _elem[i + 1];
-    }
-    _size--;
+    remove(r, r+1);
     return ret;
 }
 
@@ -211,6 +208,27 @@ Rank Vector<T>::find(const T &e, Rank lo, Rank hi) const {
         }
     }
     return -1;
+}
+
+/*
+ * @brief: 删除一定的区间
+ * @param: lo 删除的开始位置
+ * @param: hi 删除的结束位置
+ * @ret: 返回删除的数量
+ * */
+template<typename T>
+int Vector<T>::remove(Rank lo, Rank hi) {
+    if (hi > _size) {
+        return 0;
+    }
+    for (int i = 0; i < (_size - hi); ++i) {
+        if ((hi+i) <= _size) {
+            _elem[lo+i] = _elem[hi+i];
+        }
+    }
+    _size = _size - (hi - lo);
+    shrink();
+    return lo - hi;
 }
 
 

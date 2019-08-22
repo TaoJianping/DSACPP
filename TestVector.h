@@ -13,6 +13,7 @@ public:
     static int main();
     static int TestCommon();
     static void TestCopyFrom();
+    static void TestRemove();
 
 };
 
