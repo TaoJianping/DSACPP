@@ -9,7 +9,7 @@
 using namespace std;
 
 void TestVector::TestCopyFrom() {
-    std::cout << "¿ªÊ¼²âÊÔcopyFrom" << std::endl;
+    std::cout << "start test copyFrom" << std::endl;
     int test[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     auto v = Vector<int>(test, 3, 8);
     assert(v[0] == 3);
@@ -17,7 +17,7 @@ void TestVector::TestCopyFrom() {
     assert(v[2] == 5);
     assert(v[3] == 6);
     assert(v[4] == 7);
-    std::cout << "²âÊÔcopyFrom³É¹¦" << std::endl;
+    std::cout << "test copyFrom successful" << std::endl;
 }
 
 int TestVector::main() {
@@ -28,10 +28,10 @@ int TestVector::main() {
 }
 
 int TestVector::TestCommon() {
-    std::cout << "¿ªÊ¼²âÊÔTestVector" << std::endl;
-    // new ³öÀ´µÄ¶ÔÏó¶¼ÔÚ¶ÑÉÏ
-    // Ã»ÊÂ²»Òªnew
-    // TODO Àí½â¿½±´¹¹Ôì£¿£¿£¿£¿
+    std::cout << "start TestVector" << std::endl;
+    // new ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½
+    // Ã»ï¿½Â²ï¿½Òªnew
+    // TODO ï¿½ï¿½â¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì£¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     Vector<int> v;
 
     v.insert(0, 9);
@@ -97,7 +97,7 @@ int TestVector::TestCommon() {
     auto test6 = v.find(5);
     assert(test6 == -1);
 
-    std::cout << "²âÊÔTestVector³É¹¦" << std::endl;
+    std::cout << "test TestVector successful" << std::endl;
     return 0;
 }
 
