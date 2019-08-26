@@ -24,6 +24,7 @@ int TestVector::main() {
     TestCommon();
     TestCopyFrom();
     TestRemove();
+    TestBubbleSort();
     return 0;
 }
 
@@ -124,4 +125,35 @@ void TestVector::TestRemove() {
     assert(v[4] == 9);
 
     assert(v.size() == 5);
+}
+
+void TestVector::TestBubbleSort() {
+    int l[5] = {5, 1, 3, 4, 2};
+    auto v = Vector<int>(l, 0, 5);
+    v.sort();
+    assert(v[0] == 1);
+    assert(v[1] == 2);
+    assert(v[2] == 3);
+    assert(v[3] == 4);
+    assert(v[4] == 5);
+
+    int l1[5] = {5};
+    auto v1 = Vector<int>(l1, 0, 1);
+    v1.sort();
+    assert(v1[0] == 5);
+
+    int l2[10] = {5, 1, 3, 4, 2, 100, 83, 92, 43, 10000};
+    auto v2 = Vector<int>(l2, 0, 10);
+    v2.sort();
+    assert(v2[0] == 1);
+    assert(v2[1] == 2);
+    assert(v2[2] == 3);
+    assert(v2[3] == 4);
+    assert(v2[4] == 5);
+    assert(v2[5] == 43);
+    assert(v2[6] == 83);
+    assert(v2[7] == 92);
+    assert(v2[8] == 100);
+    assert(v2[9] == 10000);
+
 }

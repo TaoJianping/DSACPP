@@ -14,7 +14,7 @@ public:
     static int TestCommon();
     static void TestCopyFrom();
     static void TestRemove();
-
+    static void TestBubbleSort();
 };
 
 

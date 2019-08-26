@@ -14,6 +14,8 @@ typedef int Rank;
 
 template<typename T>
 class Vector {
+private:
+    void swap(T & A, T & B);
 protected:
     Rank _size;
     int _capacity;
@@ -152,6 +154,9 @@ T &Vector<T>::operator[](Rank r) const {
 template<typename T>
 void Vector<T>::copyFrom(T const *A, Rank lo, Rank hi) {
     _capacity = (hi - lo) * 2;
+    if (_capacity < DEFAULT_CAPACITY) {
+        _capacity = DEFAULT_CAPACITY;
+    }
     // 加不加括号有什么区别？
     _elem = new T[_capacity]();
     for (_size = 0; (lo + _size) < hi; ++_size) {
@@ -229,6 +234,35 @@ int Vector<T>::remove(Rank lo, Rank hi) {
     _size = _size - (hi - lo);
     shrink();
     return lo - hi;
+}
+
+template<typename T>
+void Vector<T>::sort(Rank lo, Rank hi) {
+    bubbleSort(lo, hi);
+}
+
+template<typename T>
+void Vector<T>::bubbleSort(Rank lo, Rank hi) {
+    for (int i = hi; lo < i; --i) {
+        bubble(lo, i);
+    }
+}
+
+template<typename T>
+bool Vector<T>::bubble(Rank lo, Rank hi) {
+    for (int i = lo; i < (hi-1); ++i) {
+        if (!(_elem[i] <= _elem[i+1])) {
+            swap(_elem[i], _elem[i+1]);
+        }
+    }
+    return false;
+}
+
+template<typename T>
+void Vector<T>::swap(T & a, T & b) {
+    auto tmp = a;
+    a = b;
+    b = tmp;
 }
 
 
