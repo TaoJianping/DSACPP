@@ -27,7 +27,7 @@ protected:
 
     void shrink();
 
-    bool bubble(Rank lo, Rank hi);
+    Rank bubble(Rank lo, Rank hi);
 
     void bubbleSort(Rank lo, Rank hi);
 
@@ -243,26 +243,42 @@ void Vector<T>::sort(Rank lo, Rank hi) {
 
 template<typename T>
 void Vector<T>::bubbleSort(Rank lo, Rank hi) {
-    for (int i = hi; lo < i; --i) {
-        bubble(lo, i);
+    for (int i = hi; lo < i;) {
+        i = bubble(lo, i);
     }
 }
 
-template<typename T>
-bool Vector<T>::bubble(Rank lo, Rank hi) {
-    for (int i = lo; i < (hi-1); ++i) {
-        if (!(_elem[i] <= _elem[i+1])) {
-            swap(_elem[i], _elem[i+1]);
-        }
-    }
-    return false;
-}
+// 改进一，当出现整个一次扫描都顺序的时候，直接返回，break掉当前的循环
+//template<typename T>
+//bool Vector<T>::bubble(Rank lo, Rank hi) {
+//    bool is_sorted = true;
+//    for (int i = lo; i < (hi-1); ++i) {
+//        if (!(_elem[i] <= _elem[i+1])) {
+//            is_sorted = false;
+//            swap(_elem[i], _elem[i+1]);
+//        }
+//    }
+//    return is_sorted;
+//}
 
 template<typename T>
 void Vector<T>::swap(T & a, T & b) {
     auto tmp = a;
     a = b;
     b = tmp;
+}
+
+// 改进二，取得交换的最后
+template<typename T>
+Rank Vector<T>::bubble(Rank lo, Rank hi) {
+    Rank last = lo;
+    for (int i = lo; i < (hi-1); ++i) {
+        if (!(_elem[i] <= _elem[i+1])) {
+            last = i + 1;
+            swap(_elem[i], _elem[i+1]);
+        }
+    }
+    return last;
 }
 
 
