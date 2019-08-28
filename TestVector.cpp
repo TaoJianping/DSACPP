@@ -103,6 +103,7 @@ int TestVector::TestCommon() {
 }
 
 void TestVector::TestRemove() {
+    std::cout << "start test TestRemove" << std::endl;
     int l[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     auto v = Vector<int>(l, 0, 10);
     assert(v[0] == 0);
@@ -125,9 +126,11 @@ void TestVector::TestRemove() {
     assert(v[4] == 9);
 
     assert(v.size() == 5);
+    std::cout << "test TestRemove Successful" << std::endl;
 }
 
 void TestVector::TestBubbleSort() {
+    std::cout << "start test TestBubbleSort" << std::endl;
     int l[5] = {5, 1, 3, 4, 2};
     auto v = Vector<int>(l, 0, 5);
     v.sort();
@@ -155,5 +158,5 @@ void TestVector::TestBubbleSort() {
     assert(v2[7] == 92);
     assert(v2[8] == 100);
     assert(v2[9] == 10000);
-
+    std::cout << "test TestBubbleSort successful" << std::endl;
 }
