@@ -24,7 +24,7 @@ int TestVector::main() {
     TestCommon();
     TestCopyFrom();
     TestRemove();
-    TestBubbleSort();
+    TestSort();
     return 0;
 }
 
