@@ -17,8 +17,8 @@ class Vector {
 private:
     void swap(T & A, T & B);
 protected:
-    Rank _size;
-    int _capacity;
+    Rank _size{};
+    int _capacity{};
     T *_elem;
 
     void copyFrom(T const *A, Rank lo, Rank hi);    // 复制数组区间
@@ -238,7 +238,8 @@ int Vector<T>::remove(Rank lo, Rank hi) {
 
 template<typename T>
 void Vector<T>::sort(Rank lo, Rank hi) {
-    bubbleSort(lo, hi);
+//    bubbleSort(lo, hi);
+    mergeSort(lo, hi);
 }
 
 template<typename T>
@@ -281,6 +282,35 @@ Rank Vector<T>::bubble(Rank lo, Rank hi) {
     return last;
 }
 
+template<typename T>
+void Vector<T>::mergeSort(Rank lo, Rank hi) {
+    if (hi - lo < 2) {
+        return;
+    }
+    int mid = (lo + hi) / 2;
+    mergeSort(lo, mid);
+    mergeSort(mid, hi);
+    merge(lo, mid, hi);
+}
+
+template<typename T>
+void Vector<T>::merge(Rank lo, Rank mi, Rank hi) {
+    T * A = _elem + lo;     // i
+    T * B = new T[hi-lo]();     // j
+    for (int i = 0; i < (mi-lo); ++i) {
+        B[i] = A[i];
+    }
+    T * C = _elem + mi;     // k
+
+    auto lb = mi - lo;
+    auto lc = hi - mi;
+
+    for (Rank i = 0, j = 0, k = 0; j < lb || k < lc;) {
+        if ((j < lb) && (lc <= k || B[j] <= C[k])) A[i++] = B[j++];
+        if ((k < lc) && (lb <= j || C[k] < B[j])) A[i++] = C[k++];
+    }
+    delete [] B;
+}
 
 #endif //DSACPP_VECTOR_H
 

@@ -29,10 +29,7 @@ int TestVector::main() {
 }
 
 int TestVector::TestCommon() {
-    std::cout << "start TestVector" << std::endl;
-    // new �����Ķ����ڶ���
-    // û�²�Ҫnew
-    // TODO ��⿽�����죿������
+    std::cout << "start TestCommon" << std::endl;
     Vector<int> v;
 
     v.insert(0, 9);
@@ -98,6 +95,14 @@ int TestVector::TestCommon() {
     auto test6 = v.find(5);
     assert(test6 == -1);
 
+    v.sort();
+    assert(v[0] == 3);
+    assert(v[1] == 4);
+    assert(v[2] == 4);
+    assert(v[3] == 6);
+    assert(v[4] == 7);
+    assert(v[5] == 9);
+
     std::cout << "test TestVector successful" << std::endl;
     return 0;
 }
@@ -129,7 +134,7 @@ void TestVector::TestRemove() {
     std::cout << "test TestRemove Successful" << std::endl;
 }
 
-void TestVector::TestBubbleSort() {
+void TestVector::TestSort() {
     std::cout << "start test TestBubbleSort" << std::endl;
     int l[5] = {5, 1, 3, 4, 2};
     auto v = Vector<int>(l, 0, 5);
