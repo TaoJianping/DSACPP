@@ -73,7 +73,7 @@ public:
 
     T & operator[](Rank r) const;
 
-    Vector<T> &operator=(Vector<T> const &);
+    Vector<T> &operator=(Vector<T> const &) = delete;
 
     T remove(Rank r);
 
@@ -310,6 +310,34 @@ void Vector<T>::merge(Rank lo, Rank mi, Rank hi) {
         if ((k < lc) && (lb <= j || C[k] < B[j])) A[i++] = C[k++];
     }
     delete [] B;
+}
+
+template<typename T>
+int Vector<T>::deduplicate() {
+    for (int i = 1; i < _size;) {
+        auto res = find(_elem[i], 0, i);
+        if (res == -1) {
+            i++;
+        } else {
+            remove(i);
+        }
+    }
+    return 0;
+}
+
+template<typename T>
+template<typename VST>
+void Vector<T>::traverse(VST & visit) {
+    for (int i = 0; i < _size; ++i) {
+        visit(_elem[i]);
+    }
+}
+
+template<typename T>
+void Vector<T>::traverse(void (*visit)(T &)) {
+    for (int i = 0; i < _size; ++i) {
+        visit(_elem[i]);
+    }
 }
 
 #endif //DSACPP_VECTOR_H

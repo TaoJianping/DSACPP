@@ -25,6 +25,8 @@ int TestVector::main() {
     TestCopyFrom();
     TestRemove();
     TestSort();
+    TestDeduplicate();
+    TestTraverse();
     return 0;
 }
 
@@ -164,4 +166,46 @@ void TestVector::TestSort() {
     assert(v2[8] == 100);
     assert(v2[9] == 10000);
     std::cout << "test TestBubbleSort successful" << std::endl;
+}
+
+void TestVector::TestDeduplicate() {
+    std::cout << "start test deduplicate" << std::endl;
+    int l[5] = {5, 1, 3, 5, 2};
+    auto v = Vector<int>(l, 0, 5);
+    v.deduplicate();
+    assert(v[0] == 5);
+    assert(v[1] == 1);
+    assert(v[2] == 3);
+    assert(v[3] == 2);
+    assert(v.size() == 4);
+
+    int l1[1] = {5};
+    auto v1 = Vector<int>(l1, 0, 1);
+    v1.deduplicate();
+    assert(v1[0] == 5);
+    assert(v1.size() == 1);
+
+    int l2[4] = {5, 5, 5, 5};
+    auto v2 = Vector<int>(l2, 0, 4);
+    v2.deduplicate();
+    assert(v2[0] == 5);
+    assert(v2.size() == 1);
+
+    std::cout << "test deduplicate successful" << std::endl;
+}
+
+void TestVector::TestTraverse() {
+    std::cout << "start test Traverse" << std::endl;
+
+    int l[5] = {5, 1, 3, 5, 2};
+    auto v = Vector<int>(l, 0, 5);
+    auto func = Increase<int>();
+    v.traverse(func);
+    assert(v[0] == 6);
+    assert(v[1] == 2);
+    assert(v[2] == 4);
+    assert(v[3] == 6);
+    assert(v[4] == 3);
+
+    std::cout << "test Traverse successful" << std::endl;
 }

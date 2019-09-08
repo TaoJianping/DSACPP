@@ -15,7 +15,15 @@ public:
     static void TestCopyFrom();
     static void TestRemove();
     static void TestSort();
+    static void TestDeduplicate();
+    static void TestTraverse();
 };
 
+
+template <typename T>
+struct Increase {
+    // Todo why add this key word -> virtual
+    virtual void operator()(T & e) {e++;}
+};
 
 #endif //DSACPP_TESTVECTOR_H
