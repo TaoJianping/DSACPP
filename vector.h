@@ -15,7 +15,8 @@ typedef int Rank;
 template<typename T>
 class Vector {
 private:
-    void swap(T & A, T & B);
+    void swap(T &A, T &B);
+
 protected:
     Rank _size{};
     int _capacity{};
@@ -71,7 +72,7 @@ public:
 
     Rank search(T const &e, Rank lo, Rank hi) const;
 
-    T & operator[](Rank r) const;
+    T &operator[](Rank r) const;
 
     Vector<T> &operator=(Vector<T> const &) = delete;
 
@@ -121,7 +122,7 @@ void Vector<T>::expand() {
 template<typename T>
 T Vector<T>::remove(Rank r) {
     T ret = _elem[r];
-    remove(r, r+1);
+    remove(r, r + 1);
     return ret;
 }
 
@@ -227,8 +228,8 @@ int Vector<T>::remove(Rank lo, Rank hi) {
         return 0;
     }
     for (int i = 0; i < (_size - hi); ++i) {
-        if ((hi+i) <= _size) {
-            _elem[lo+i] = _elem[hi+i];
+        if ((hi + i) <= _size) {
+            _elem[lo + i] = _elem[hi + i];
         }
     }
     _size = _size - (hi - lo);
@@ -263,7 +264,7 @@ void Vector<T>::bubbleSort(Rank lo, Rank hi) {
 //}
 
 template<typename T>
-void Vector<T>::swap(T & a, T & b) {
+void Vector<T>::swap(T &a, T &b) {
     auto tmp = a;
     a = b;
     b = tmp;
@@ -273,10 +274,10 @@ void Vector<T>::swap(T & a, T & b) {
 template<typename T>
 Rank Vector<T>::bubble(Rank lo, Rank hi) {
     Rank last = lo;
-    for (int i = lo; i < (hi-1); ++i) {
-        if (!(_elem[i] <= _elem[i+1])) {
+    for (int i = lo; i < (hi - 1); ++i) {
+        if (!(_elem[i] <= _elem[i + 1])) {
             last = i + 1;
-            swap(_elem[i], _elem[i+1]);
+            swap(_elem[i], _elem[i + 1]);
         }
     }
     return last;
@@ -295,12 +296,12 @@ void Vector<T>::mergeSort(Rank lo, Rank hi) {
 
 template<typename T>
 void Vector<T>::merge(Rank lo, Rank mi, Rank hi) {
-    T * A = _elem + lo;     // i
-    T * B = new T[hi-lo]();     // j
-    for (int i = 0; i < (mi-lo); ++i) {
+    T *A = _elem + lo;     // i
+    T *B = new T[hi - lo]();     // j
+    for (int i = 0; i < (mi - lo); ++i) {
         B[i] = A[i];
     }
-    T * C = _elem + mi;     // k
+    T *C = _elem + mi;     // k
 
     auto lb = mi - lo;
     auto lc = hi - mi;
@@ -309,7 +310,7 @@ void Vector<T>::merge(Rank lo, Rank mi, Rank hi) {
         if ((j < lb) && (lc <= k || B[j] <= C[k])) A[i++] = B[j++];
         if ((k < lc) && (lb <= j || C[k] < B[j])) A[i++] = C[k++];
     }
-    delete [] B;
+    delete[] B;
 }
 
 template<typename T>
@@ -327,7 +328,7 @@ int Vector<T>::deduplicate() {
 
 template<typename T>
 template<typename VST>
-void Vector<T>::traverse(VST & visit) {
+void Vector<T>::traverse(VST &visit) {
     for (int i = 0; i < _size; ++i) {
         visit(_elem[i]);
     }
@@ -338,6 +339,29 @@ void Vector<T>::traverse(void (*visit)(T &)) {
     for (int i = 0; i < _size; ++i) {
         visit(_elem[i]);
     }
+}
+
+template<typename T>
+int Vector<T>::uniquify() {
+    int i;
+    int j;
+    for (i = 0, j = 1; j < _size;) {
+        if (_elem[i] == _elem[j]) {
+            ++j;
+        } else {
+            if ((i+1) == j) {
+                ++i;
+                ++j;
+            } else {
+                swap(_elem[i+1], _elem[j]);
+                ++i;
+                ++j;
+            }
+        }
+    }
+    _size = i+1;
+    shrink();
+    return 0;
 }
 
 #endif //DSACPP_VECTOR_H

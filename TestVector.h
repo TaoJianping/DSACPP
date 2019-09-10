@@ -17,6 +17,7 @@ public:
     static void TestSort();
     static void TestDeduplicate();
     static void TestTraverse();
+    static void TestUniquify();
 };
 
 

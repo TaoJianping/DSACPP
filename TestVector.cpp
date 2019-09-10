@@ -27,6 +27,7 @@ int TestVector::main() {
     TestSort();
     TestDeduplicate();
     TestTraverse();
+    TestUniquify();
     return 0;
 }
 
@@ -208,4 +209,33 @@ void TestVector::TestTraverse() {
     assert(v[4] == 3);
 
     std::cout << "test Traverse successful" << std::endl;
+}
+
+void TestVector::TestUniquify() {
+    std::cout << "start test Uniquify" << std::endl;
+
+    int l[5] = {1, 3, 5, 5, 5};
+    auto v = Vector<int>(l, 0, 5);
+    v.uniquify();
+    assert(v[0] == 1);
+    assert(v[1] == 3);
+    assert(v[2] == 5);
+    assert(v.size() == 3);
+
+    int l1[5] = {1, 5, 5, 5, 5};
+    auto v1 = Vector<int>(l1, 0, 5);
+    v1.uniquify();
+    assert(v1[0] == 1);
+    assert(v1[1] == 5);
+    assert(v1.size() == 2);
+
+    int l2[5] = {1, 5, 5, 10, 10};
+    auto v2 = Vector<int>(l2, 0, 5);
+    v2.uniquify();
+    assert(v2[0] == 1);
+    assert(v2[1] == 5);
+    assert(v2[2] == 10);
+    assert(v2.size() == 3);
+
+    std::cout << "test Uniquify successful" << std::endl;
 }
