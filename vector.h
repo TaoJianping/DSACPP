@@ -364,5 +364,19 @@ int Vector<T>::uniquify() {
     return 0;
 }
 
+template<typename T>
+Rank Vector<T>::search(const T &e) const {
+    return search(e, 0, _size);
+}
+
+template<typename T>
+Rank Vector<T>::search(const T &e, Rank lo, Rank hi) const {
+    while (lo < hi) {
+        Rank mi = (lo + hi) / 2;
+        (e < _elem[mi]) ? hi = mi : lo = mi + 1;
+    }
+    return --lo;
+}
+
 #endif //DSACPP_VECTOR_H
 

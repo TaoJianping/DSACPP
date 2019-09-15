@@ -3,4 +3,4 @@ project(dsacpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(dsacpp main.cpp TestVector.cpp TestVector.h)
+add_executable(dsacpp main.cpp TestVector.cpp TestVector.h List.cpp List.h Stack.cpp Stack.h)
