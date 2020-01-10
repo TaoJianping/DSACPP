@@ -5,7 +5,6 @@
 #ifndef DSACPP_LIST_H
 #define DSACPP_LIST_H
 
-#include <glob.h>
 #include "vector.h"
 
 #define Posi(T) ListNode<T>*
