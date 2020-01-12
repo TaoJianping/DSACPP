@@ -3,8 +3,9 @@
 //
 
 #include "TestVector.h"
-#include "gtest/gtest.h"
 #include "List.h"
+#include "gtest/gtest.h"
+#include "Stack.h"
 
 int add(int a, int b){
     return a+b;
