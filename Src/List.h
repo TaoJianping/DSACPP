@@ -23,7 +23,11 @@ public:
 
     Posi(T)insertAsPred(T const &e);
 
-    Posi(T)insertAsSucc(T const &e);
+    Posi(T)insertAsSucc(T const &e) {
+        auto node = new ListNode(e, this, succ);
+        succ->pred = node;
+        succ = node;
+    };
 
 };
 
@@ -57,6 +61,14 @@ public:
     List(List<T> const &L, Rank r, int n);
 
     List(Posi(T)p, int n);
+
+    List(initializer_list<T> il) {
+        _size = il.size();
+        init();
+        for (auto item : il) {
+            insertAsLast(item);
+        }
+    }
 
     // 析构函数
     ~List();
@@ -92,10 +104,15 @@ public:
 
     Posi(T)insertAsLast(T const &e);
 
-    Posi(T)insertBefore(Posi(T)p, T const &e) {_size++;
-        return p->insertAsPred(e);};
+    Posi(T)insertBefore(Posi(T)p, T const &e) {
+        _size++;
+        return p->insertAsPred(e);
+    };
 
-    Posi(T)insertAfter(Posi(T)p, T const &e);
+    Posi(T)insertAfter(Posi(T)p, T const &e) {
+        _size++;
+        return p->insertAsSucc(e);
+    };
 
     T remove(Posi(T)p);
 
@@ -220,6 +237,48 @@ int List<T>::deduplicate() {
     }
 
     return oldSize - _size;
+}
+
+template<typename T>
+ListNode<T> * List<T>::insertAsFirst(const T & e) {
+    auto node = insertAfter(header, e);
+    return node;
+}
+
+template<typename T>
+void List<T>::sort(ListNode<T> *p, int n) {
+    switch (rand() % 3)
+    {
+        case 1:
+            insertionSort(p, n);
+            break;
+        case 2:
+            selectionSort(p, n);
+            break;
+        default:
+            mergeSort(p, n);
+            break;
+    }
+
+}
+
+template<typename T>
+void List<T>::insertionSort(ListNode<T> * p, int len) {
+
+}
+
+template<typename T>
+ListNode<T> *List<T>::search(const T &e, int n, ListNode<T> *trailer) const {
+    while (0 <= n)
+    {
+        trailer = trailer->pred;
+        if (e >= trailer->data) {
+            return trailer;
+        }
+        n--;
+    }
+
+    return trailer;
 }
 
 #endif //DSACPP_LIST_H

@@ -3,5 +3,6 @@ project(dsacpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_BUILD_TYPE Debug)
 add_subdirectory(Src)
 add_subdirectory(UnitTest)
