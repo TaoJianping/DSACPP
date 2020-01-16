@@ -27,6 +27,7 @@ public:
         auto node = new ListNode(e, this, succ);
         succ->pred = node;
         succ = node;
+        return node;
     };
 
 };
