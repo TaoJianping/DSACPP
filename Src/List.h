@@ -5,8 +5,10 @@
 #ifndef DSACPP_LIST_H
 #define DSACPP_LIST_H
 
-#include "vector.h"
+#include <initializer_list>
+#include <cstdlib>
 
+using Rank = int;
 #define Posi(T) ListNode<T>*
 
 template<typename T>
@@ -63,7 +65,7 @@ public:
 
     List(Posi(T)p, int n);
 
-    List(initializer_list<T> il) {
+    List(std::initializer_list<T> il) {
         _size = il.size();
         init();
         for (auto item : il) {
@@ -101,7 +103,7 @@ public:
 
     Posi(T)selectMax() {
         if (_size == 0)
-            return NULL;
+            return nullptr;
         return selectMax(header->succ, _size);
     }
 
@@ -252,7 +254,7 @@ ListNode<T> * List<T>::insertAsFirst(const T & e) {
 
 template<typename T>
 void List<T>::sort(ListNode<T> *p, int n) {
-    switch (rand() % 3)
+    switch (random() % 3)
     {
         case 1:
             insertionSort(p, n);

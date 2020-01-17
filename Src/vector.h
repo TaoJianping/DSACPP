@@ -5,9 +5,6 @@
 #ifndef DSACPP_VECTOR_H
 #define DSACPP_VECTOR_H
 
-#include <iostream>
-
-using namespace std;
 
 typedef int Rank;
 #define DEFAULT_CAPACITY 3
