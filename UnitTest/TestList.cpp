@@ -43,3 +43,14 @@ TEST(TestListSearch, test4) {
     EXPECT_EQ(res->data, 2);
 }
 
+TEST(TestListSelectMax, test1) {
+    auto l = new List<int> {2, 4, 5, 6, 7};
+    auto res = l->selectMax();
+    EXPECT_EQ(res->data, 7);
+}
+
+TEST(TestListSelectMax, test2) {
+    auto l = new List<int> {1000000, 4, 5, 6, 7};
+    auto res = l->selectMax();
+    EXPECT_EQ(res->data, 1000000);
+}

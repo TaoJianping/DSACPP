@@ -99,8 +99,12 @@ public:
 
     Posi(T) selectMax(Posi(T)p, int n);
 
-    Posi(T)selectMax() { return selectMax(header->succ, _size); }
-    // can write function
+    Posi(T)selectMax() {
+        if (_size == 0)
+            return NULL;
+        return selectMax(header->succ, _size);
+    }
+
     Posi(T)insertAsFirst(T const &e);
 
     Posi(T)insertAsLast(T const &e);
@@ -280,6 +284,19 @@ ListNode<T> *List<T>::search(const T &e, int n, ListNode<T> *trailer) const {
     }
 
     return trailer;
+}
+
+template<typename T>
+ListNode<T> *List<T>::selectMax(ListNode<T> *p, int n) {
+    auto maxNode = p;
+    while (n > 0) {
+        p = p->succ;
+        if (p->data > maxNode->data) {
+            maxNode = p;
+        }
+        --n;
+    }
+    return maxNode;
 }
 
 #endif //DSACPP_LIST_H
