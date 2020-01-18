@@ -131,6 +131,8 @@ public:
 
     void selectionSort();
 
+    void insertionSort();
+
     int deduplicate();
 
     int uniquify();
@@ -272,22 +274,31 @@ void List<T>::sort(ListNode<T> *p, int n) {
 }
 
 template<typename T>
-void List<T>::insertionSort(ListNode<T> * p, int len) {
-
+void List<T>::insertionSort(ListNode<T> * p, int len)
+{
+    for (int i = 0; i < len; ++i)
+    {
+        auto nextElem = p->succ;
+        auto pos = search(p->data, i, p);
+        insertAfter(pos, p->data);
+        remove(p);
+        p = nextElem;
+    }
 }
 
+// 在有序列表内节点p（可能是trailer）的n个真前驱中，找到不大于e的最后者
 template<typename T>
-ListNode<T> *List<T>::search(const T &e, int n, ListNode<T> *trailer) const {
-    while (0 <= n)
+ListNode<T> *List<T>::search(const T &e, int n, ListNode<T> *p) const
+{
+    while (n-- >= 0)
     {
-        trailer = trailer->pred;
-        if (e >= trailer->data) {
-            return trailer;
-        }
-        n--;
-    }
+        p = p->pred;
+        auto data = p->data;
 
-    return trailer;
+        if ( data <= e)
+            break;
+    }
+    return p;
 }
 
 template<typename T>
@@ -323,6 +334,11 @@ void List<T>::selectionSort(ListNode<T>* p, int n) {
 template<typename T>
 void List<T>::selectionSort() {
     selectionSort(first(), _size);
+}
+
+template<typename T>
+void List<T>::insertionSort() {
+    insertionSort(first(), _size);
 }
 
 #endif //DSACPP_LIST_H
