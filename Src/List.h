@@ -129,6 +129,8 @@ public:
 
     void sort() { sort(first(), _size); }
 
+    void selectionSort();
+
     int deduplicate();
 
     int uniquify();
@@ -157,7 +159,7 @@ void List<T>::init() {
 }
 
 template<typename T>
-T &List<T>::operator[](int r) const {
+T& List<T>::operator[](int r) const {
     auto node = first();
     while (0 < r--) {
         node = node->succ;
@@ -299,6 +301,28 @@ ListNode<T> *List<T>::selectMax(ListNode<T> *p, int n) {
         --n;
     }
     return maxNode;
+}
+
+template<typename T>
+void List<T>::selectionSort(ListNode<T>* p, int n) {
+    ListNode<T>* head = p->pred;
+    ListNode<T>* tail = p;
+
+    for (int i = 0; i < n; ++i) {
+        tail = tail->succ;
+    }
+
+    while (n > 0) {
+        auto max = selectMax(head->succ, n-1);
+        insertBefore(tail, remove(max));
+        tail = tail->pred;
+        --n;
+    }
+}
+
+template<typename T>
+void List<T>::selectionSort() {
+    selectionSort(first(), _size);
 }
 
 #endif //DSACPP_LIST_H

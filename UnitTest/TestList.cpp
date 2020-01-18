@@ -54,3 +54,17 @@ TEST(TestListSelectMax, test2) {
     auto res = l->selectMax();
     EXPECT_EQ(res->data, 1000000);
 }
+
+TEST(TestListInsertionSort, test1) {
+    auto l = new List<int> {1000000, 4, 5, 6, 7};
+    l->selectionSort();
+    EXPECT_EQ(l->first()->data, 4);
+    EXPECT_EQ(l->last()->data, 1000000);
+}
+
+TEST(TestListInsertionSort, test2) {
+    auto l = new List<int> {122, 3, 10, -1, 0};
+    l->selectionSort();
+    EXPECT_EQ(l->first()->data, -1);
+    EXPECT_EQ(l->last()->data, 122);
+}
