@@ -17,7 +17,7 @@ private:
 protected:
     Rank _size{};
     int _capacity{};
-    T *_elem;
+    T * _elem;
 
     void copyFrom(T const *A, Rank lo, Rank hi);    // 复制数组区间
 

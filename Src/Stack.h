@@ -6,16 +6,23 @@
 #define DSACPP_STACK_H
 
 
+#include <cctype>
 #include "vector.h"
+
+
+
 
 template<typename T>
 class Stack : public Vector<T> {
 public:
     T &top() { return (*this)[this->size() - 1]; }
 
-    T pop() { return remove(this->size() - 1); }
+    T pop() {
+        return this->remove(this->size() - 1);
+    }
 
-    void push(T const &e) { insert(this->size(), e); }
+    void push(T const &e) { this->insert(this->size(), e); }
+
 };
 
 

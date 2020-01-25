@@ -6,12 +6,14 @@ set(
         Headers
             TestVector.h
             TestList.h
+            TestStack.h
 )
 
 set(
         Sources
             TestVector.cpp
             TestList.cpp
+            TestStack.cpp
 )
 
 
