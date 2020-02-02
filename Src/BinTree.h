@@ -32,7 +32,7 @@ public:
 
     int remove(BinNodePosi(T) x);
     BinTree<T>* secede(BinNodePosi(T) x);
-
+    // 遍历
     template <typename VST>
     void travLevel(VST& visit) { if (_root) _root->travLevel(visit);}
     template <typename VST>
@@ -41,7 +41,7 @@ public:
     void travIn(VST& visit) { if (_root) _root->travIn(visit);}
     template <typename VST>
     void travPost(VST& visit) {if (_root) _root->travPost(visit);}
-
+    // 比较
     bool operator< (BinTree<T> const& t) {
         return _root && t._root && (_root < t._root);
     }
@@ -50,5 +50,41 @@ public:
     }
 };
 
+template<typename T>
+int BinTree<T>::updateHeight(BinNode<T> *x) {
+    x->height = 1 + max(stature(x->lc), stature(x->rc));
+    return x->height;
+}
+
+template<typename T>
+void BinTree<T>::updateHeightAbove(BinNode<T> *x) {
+    while (x) {
+        updateHeight(x);
+        x = x->parent;
+    }
+}
+
+template<typename T>
+BinNode<T> *BinTree<T>::insertAsRoot(const T &e) {
+    _size = 1;
+    _root = new BinNode<T>(e);
+    return _root;
+}
+
+template<typename T>
+BinNode<T> *BinTree<T>::insertAsLC(BinNode<T> *x, const T &e) {
+    _size++;
+    x->insertAsLC(e);
+    updateHeightAbove(x);
+    return x->lc;
+}
+
+template<typename T>
+BinNode<T> *BinTree<T>::insertAsRC(BinNode<T> *x, const T &e) {
+    _size++;
+    x->insertAsRC(e);
+    updateHeightAbove(x);
+    return x->rc;
+}
 
 #endif //DSACPP_BINTREE_H
