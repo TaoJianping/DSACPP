@@ -50,15 +50,29 @@ public:
     }
 };
 
+/*
+ * 我们定义：
+ *          1. 如果只有根节点，则高度为0
+ *          2. 如果连根节点都没有，则高度为-1
+ * */
 template<typename T>
 int BinTree<T>::updateHeight(BinNode<T> *x) {
-    x->height = 1 + max(stature(x->lc), stature(x->rc));
+    if (x == nullptr)
+        return -1;
+
+    auto leftChildHeight = x->lChild ? x->lChild->height : -1;
+    auto rightChildHeight = x->rChild ? x->rChild->height : -1;
+
+    // 如果存在子节点，要加上根节点到子节点的距离，也就是 -> 1
+    x->height = 1 + max(leftChildHeight, rightChildHeight);
+
     return x->height;
 }
 
 template<typename T>
 void BinTree<T>::updateHeightAbove(BinNode<T> *x) {
-    while (x) {
+    while (x)
+    {
         updateHeight(x);
         x = x->parent;
     }
@@ -73,10 +87,10 @@ BinNode<T> *BinTree<T>::insertAsRoot(const T &e) {
 
 template<typename T>
 BinNode<T> *BinTree<T>::insertAsLC(BinNode<T> *x, const T &e) {
+    auto node = x->insertAsLC(e);
     _size++;
-    x->insertAsLC(e);
     updateHeightAbove(x);
-    return x->lc;
+    return node;
 }
 
 template<typename T>
@@ -84,7 +98,7 @@ BinNode<T> *BinTree<T>::insertAsRC(BinNode<T> *x, const T &e) {
     _size++;
     x->insertAsRC(e);
     updateHeightAbove(x);
-    return x->rc;
+    return x->rChild;
 }
 
 #endif //DSACPP_BINTREE_H

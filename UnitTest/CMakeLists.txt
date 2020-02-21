@@ -14,7 +14,7 @@ set(
             TestVector.cpp
             TestList.cpp
             TestStack.cpp
-)
+        TestString.cpp TestString.h)
 
 
 
