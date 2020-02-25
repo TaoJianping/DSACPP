@@ -63,7 +63,14 @@ struct BinNode {
 
     // 子树中序遍历
     template <typename VST> void travIn(VST &);
-    template <typename VST> void travPost(VST &);       // 子树后序遍历
+    // 中序遍历-> 递归
+    template <typename VST> void travIn_R(BinNodePosi(T) node, VST &func);
+    // 中序遍历-> 迭代1
+    template <typename VST> void travIn_I_1(BinNodePosi(T) node, VST &func);
+    static void goAlongLeftBranch(BinNodePosi(T) node, Stack<BinNodePosi(T)> &S);
+
+    // 子树后序遍历
+    template <typename VST> void travPost(VST &);
     // 比较器、判断器
     bool operator< (BinNode const& bn) { return this->data < bn.data; }
     bool operator== (BinNode const& bn) { return this->data == bn.data; }
@@ -160,6 +167,40 @@ void BinNode<T>::visitAlongLeftBranch(BinNode<T> *node, VST &func, Stack<BinNode
         {
             S.push(node->rChild);
         }
+        node = node->lChild;
+    }
+}
+
+template<typename T>
+template<typename VST>
+void BinNode<T>::travIn_R(BinNode<T> *node, VST &func) {
+    if (node == nullptr)
+        return;
+
+    travIn_R(node->lChild, func);
+    func(node->data);
+    travIn_R(node->rChild, func);
+}
+
+template<typename T>
+template<typename VST>
+void BinNode<T>::travIn_I_1(BinNode<T> *node, VST &func) {
+    auto stack = new Stack<BinNode<T>*>();
+    while (true)
+    {
+        goAlongLeftBranch(node, stack);
+        if (stack->empty())
+            break;
+        node = stack->pop();
+        func(node->data);
+        node = node->rChild;
+    }
+}
+
+template<typename T>
+void BinNode<T>::goAlongLeftBranch(BinNode<T> *node, Stack<BinNode<T> *> &S) {
+    while (node) {
+        S.push(node);
         node = node->lChild;
     }
 }
