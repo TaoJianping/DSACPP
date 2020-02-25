@@ -71,6 +71,9 @@ struct BinNode {
 
     // 子树后序遍历
     template <typename VST> void travPost(VST &);
+    template <typename VST> void travPost_I(BinNodePosi(T) node, VST &func);
+    static void gotoHLVFL(Stack<BinNodePosi(T)> &S);
+
     // 比较器、判断器
     bool operator< (BinNode const& bn) { return this->data < bn.data; }
     bool operator== (BinNode const& bn) { return this->data == bn.data; }
@@ -202,6 +205,39 @@ void BinNode<T>::goAlongLeftBranch(BinNode<T> *node, Stack<BinNode<T> *> &S) {
     while (node) {
         S.push(node);
         node = node->lChild;
+    }
+}
+
+template<typename T>
+template<typename VST>
+void BinNode<T>::travPost_I(BinNode<T> * node, VST &func) {
+    Stack<BinNodePosi(T)> stack;
+    if (node)
+        stack.push(node);
+    while (!stack.empty())
+    {
+        // 如果栈顶和node的父节点不相等，就代表栈顶是右节点，因为我们gotoHLVFL函数里面不会递归处理右节点。
+        if (stack.top() != node->parent) {
+            gotoHLVFL(stack);
+        }
+        node = stack.pop();
+        func(node->data);
+    }
+}
+
+template<typename T>
+void BinNode<T>::gotoHLVFL(Stack<BinNode<T> *> &S) {
+    while (!S.empty()){
+        auto node = S.top();
+        if (HasLChild(*node)) {
+            if (HasRChild(*node)) {
+                S.push(node->rChild);
+            }
+            S.push(node->lChild);
+        } else {
+            S.push(node->rChild);
+        }
+        S.pop();
     }
 }
 
